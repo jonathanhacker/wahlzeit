@@ -118,6 +118,11 @@ public class Photo extends DataObject {
 	protected long creationTime = System.currentTimeMillis();
 	
 	/**
+	 * The location where this photo was taken
+	 */
+	public Location location;
+	
+	/**
 	 * The default type is jpg
 	 */
 	protected String ending = "jpg";
