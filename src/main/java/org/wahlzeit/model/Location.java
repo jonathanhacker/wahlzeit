@@ -22,12 +22,26 @@ package org.wahlzeit.model;
 
 public class Location {
 	
-	public Coordinate coordinate;
+	private Coordinate coordinate;
 	
 	/**
 	 * @methodtype constructor
 	 */
 	public Location(Coordinate coordinate){
+		this.coordinate = coordinate;
+	}
+	
+	/**
+	 * @methodtype get
+	 */
+	public Coordinate getCoordinate() {
+		return coordinate;
+	}
+	
+	/**
+	 * @methodtype set
+	 */
+	public void setCoordinate(Coordinate coordinate) {
 		this.coordinate = coordinate;
 	}
 
