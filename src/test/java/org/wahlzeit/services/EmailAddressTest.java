@@ -20,6 +20,11 @@
 
 package org.wahlzeit.services;
 
+import static org.junit.Assert.assertNotEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import junit.framework.TestCase;
 
 /**
@@ -27,6 +32,24 @@ import junit.framework.TestCase;
  */
 public class EmailAddressTest extends TestCase {
 
+	private final String emailAddressString1 = "mail1@domain.com";
+	private final String emailAddressString2 = "mail2@domain.com";
+	private final String emailAddressString3 = "mail2@domain.com";
+	private final String emptyString = "";
+	
+	private EmailAddress emailAddress1;
+	private EmailAddress emailAddress2;
+	private EmailAddress emailAddress3;
+	private EmailAddress emptyEmailAddress;
+	
+	@Before
+	public void setUp() {
+		emailAddress1 = EmailAddress.getFromString(emailAddressString1);
+		emailAddress2 = EmailAddress.getFromString(emailAddressString2);
+		emailAddress3 = EmailAddress.getFromString(emailAddressString3);
+		emptyEmailAddress = EmailAddress.getFromString(emptyString);
+	}
+	
 	/**
 	 *
 	 */
@@ -64,6 +87,52 @@ public class EmailAddressTest extends TestCase {
 	 */
 	public void testEmptyEmailAddress() {
 		assertFalse(EmailAddress.EMPTY.isValid());
+	}
+	
+	/**
+	 *
+	 */
+	@Test
+	public void testAsString() {
+		assertEquals(emailAddress1.asString(), emailAddressString1);
+		assertEquals(emailAddress2.asString(), emailAddressString3);
+		assertNotEquals(emailAddress1.asString(), emailAddressString2);
+	}
+	
+	/**
+	 *
+	 */
+	@Test
+	public void testAsInternetAddress() {
+		assertNotNull(emailAddress1.asInternetAddress());
+	}
+	
+	/**
+	 *
+	 */
+	@Test
+	public void testIsEqual() {
+		assertTrue(emailAddress1.isEqual(emailAddress1));
+		assertFalse(emailAddress1.isEqual(emailAddress2));
+		assertTrue(emailAddress2.isEqual(emailAddress3));
+	}
+	
+	/**
+	 *
+	 */
+	@Test
+	public void testIsValid() {
+		assertTrue(emailAddress1.isValid());
+		assertFalse(emptyEmailAddress.isValid());
+	}
+	
+	/**
+	 *
+	 */
+	@Test
+	public void testIsEmpty() {
+		assertFalse(emailAddress1.isEmpty());
+		assertTrue(emptyEmailAddress.isEmpty());
 	}
 
 }
