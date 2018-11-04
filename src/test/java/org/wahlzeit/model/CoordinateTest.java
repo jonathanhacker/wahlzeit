@@ -34,11 +34,11 @@ public class CoordinateTest {
 
 	private static final double EPSILON = 1e-7;
 	
-	Coordinate coordinate1;
-	Coordinate coordinate2;
-	Coordinate coordinate3;
-	Coordinate coordinate4;
-	Coordinate coordinate5;
+	private Coordinate coordinate1;
+	private Coordinate coordinate2;
+	private Coordinate coordinate3;
+	private Coordinate coordinate4;
+	private Coordinate coordinate5;
 	
 	@Before
 	public void setUp() {

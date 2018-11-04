@@ -34,8 +34,8 @@ public class LocationTest {
 	public void testLocationInitialization() {
 		Coordinate coordinate = new Coordinate(1.23, 4.32, 78.76);
 		Location location = new Location(coordinate);
-		assertEquals(location.coordinate, new Coordinate(1.23, 4.32, 78.76));
-		assertEquals(location.coordinate, coordinate);
-		assertNotEquals(location.coordinate, new Coordinate(0, 0, 0));
+		assertEquals(location.getCoordinate(), new Coordinate(1.23, 4.32, 78.76));
+		assertEquals(location.getCoordinate(), coordinate);
+		assertNotEquals(location.getCoordinate(), new Coordinate(0, 0, 0));
 	}
 }
