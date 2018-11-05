@@ -26,20 +26,18 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.wahlzeit.services.EmailAddress;
+import org.wahlzeit.services.EmailAddress;
 
 
 public class EmailServiceTest {
 
 	EmailService emailService = null;
 	EmailAddress validAddress = null;
-	EmailAddress obscureValidAddress = null;
 
 	@Before
 	public void setup() throws Exception {
 		emailService = EmailServiceManager.getDefaultService();
 		validAddress = EmailAddress.getFromString("test@test.de");
-		//example mail from https://en.wikibooks.org/wiki/JavaScript/Best_practices
-		obscureValidAddress = EmailAddress.getFromString("!#$%&'*+-/=.?^_`{|}~@[IPv6:0123:4567:89AB:CDEF:0123:4567:89AB:CDEF]");
 	}
 
 	@Test
@@ -62,12 +60,20 @@ public class EmailServiceTest {
 		}
 	}
 	
-	@Test
-	public void testSendObscureValidEmail() {
-		try {
-			assertTrue(emailService.sendEmailIgnoreException(validAddress, obscureValidAddress, "hi", "test"));
-		} catch (Exception ex) {
-			Assert.fail("Silent mode does not allow exceptions");
-		}
+	@Test(expected=MailingException.class)
+	public void testSendInvalidEmailException1() throws MailingException {
+		emailService.sendEmail(validAddress, null, "subject", "body");
+	}
+	@Test(expected=MailingException.class)
+	public void testSendInvalidEmailException2() throws MailingException {
+		emailService.sendEmail(null, validAddress, "subject", "body");
+	}
+	@Test(expected=MailingException.class)
+	public void testSendInvalidEmailException3() throws MailingException {
+		emailService.sendEmail(validAddress, validAddress, null, "body");
+	}
+	@Test(expected=MailingException.class)
+	public void testSendInvalidEmailException4() throws MailingException {
+		emailService.sendEmail(validAddress, validAddress, "subject", null);
 	}
 }
