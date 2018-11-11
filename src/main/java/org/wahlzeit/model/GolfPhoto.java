@@ -20,27 +20,58 @@
 
 package org.wahlzeit.model;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.wahlzeit.model.persistence.AllPersistenceTests;
+import com.googlecode.objectify.annotation.Subclass;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({ 
-	AllPersistenceTests.class,
-	AccessRightsTest.class,
-	CoordinateTest.class,
-	FlagReasonTest.class,
-	GenderTest.class,
-	GolfPhotoFactoryTest.class,
-	GolfPhotoTest.class,
-	GuestTest.class,
-	LocationTest.class,
-	PhotoFilterTest.class,
-	TagsTest.class,
-	UserStatusTest.class,
-	ValueTest.class,
-})
+/**
+ * A GolfPhoto represents a user-provided (uploaded) golf photo.
+ */
+@Subclass
+public class GolfPhoto extends Photo {
+	
+	private int parScore = 0; 
+	
+	/**
+	 * @methodtype constructor
+	 */
+	public GolfPhoto() {
+		super();
+	}
 
-public class AllModelTests {
+	/**
+	 * @methodtype constructor
+	 */
+	public GolfPhoto(PhotoId myId) {
+		super(myId);
+	}
+	
+	/**
+	 * @methodtype constructor
+	 */
+	public GolfPhoto(PhotoId myId, int parScore) {
+		super(myId);
+		this.parScore = parScore;
+	}
+	
+	/**
+	 * @methodtype constructor
+	 */
+	public GolfPhoto(int parScore) {
+		super();
+		this.parScore = parScore;
+	}
+	
+	/**
+	 * @methodtype getter
+	 */
+	public int getParScore() {
+		return parScore;
+	}
+	
+	/**
+	 * @methodtype setter
+	 */
+	public void setParScore(int parScore) {
+		this.parScore = parScore;
+	}
 
 }

@@ -33,7 +33,7 @@ public class PhotoFactory {
 	/**
 	 * Hidden singleton instance; needs to be initialized from the outside.
 	 */
-	private static PhotoFactory instance = null;
+	protected static PhotoFactory instance = null;
 
 	/**
 	 *
@@ -73,7 +73,8 @@ public class PhotoFactory {
 	}
 
 	/**
-	 * @methodtype factory
+	 * @methodtype factoryLoads a photo. The Java object is loaded from the Google Datastore, the Images in all sizes are loaded from the
+	 * Google Cloud storage.
 	 */
 	public Photo createPhoto() {
 		return new Photo();

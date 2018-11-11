@@ -25,8 +25,8 @@ import com.google.appengine.api.images.ImagesServiceFactory;
 import org.wahlzeit.model.GlobalsManager;
 import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoCaseManager;
-import org.wahlzeit.model.PhotoFactory;
-import org.wahlzeit.model.PhotoManager;
+import org.wahlzeit.model.GolfPhotoFactory;
+import org.wahlzeit.model.GolfPhotoManager;
 import org.wahlzeit.model.User;
 import org.wahlzeit.model.UserManager;
 import org.wahlzeit.model.persistence.DatastoreAdapter;
@@ -64,11 +64,11 @@ public abstract class ModelMain extends AbstractMain {
 		log.config(LogBuilder.createSystemMessage().addAction("load user").toString());
 		UserManager.getInstance().init();
 
-		log.config(LogBuilder.createSystemMessage().addAction("init PhotoFactory").toString());
-		PhotoFactory.initialize();
+		log.config(LogBuilder.createSystemMessage().addAction("init GolfPhotoFactory").toString());
+		GolfPhotoFactory.initialize();
 
-		log.config(LogBuilder.createSystemMessage().addAction("load Photos").toString());
-		PhotoManager.getInstance().init();
+		log.config(LogBuilder.createSystemMessage().addAction("load Golf Photos").toString());
+		GolfPhotoManager.getInstance().init();
 	}
 
 
@@ -86,7 +86,7 @@ public abstract class ModelMain extends AbstractMain {
 	 */
 	public void saveAll() throws IOException{
 		PhotoCaseManager.getInstance().savePhotoCases();
-		PhotoManager.getInstance().savePhotos();
+		GolfPhotoManager.getInstance().savePhotos();
 		UserManager.getInstance().saveClients();
 		GlobalsManager.getInstance().saveGlobals();
 	}
@@ -98,7 +98,7 @@ public abstract class ModelMain extends AbstractMain {
 		UserManager userManager = UserManager.getInstance();
 		User user = new User(userId, nickName, emailAddress);
 
-		PhotoManager photoManager = PhotoManager.getInstance();
+		GolfPhotoManager photoManager = (GolfPhotoManager) GolfPhotoManager.getInstance();
 		File photoDirFile = new File(photoDir);
 		FileFilter photoFileFilter = file -> file.getName().endsWith(".jpg");
 		File[] photoFiles = photoDirFile.listFiles(photoFileFilter);

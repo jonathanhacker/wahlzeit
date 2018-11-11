@@ -20,27 +20,14 @@
 
 package org.wahlzeit.model;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.wahlzeit.model.persistence.AllPersistenceTests;
+import java.util.logging.Logger;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({ 
-	AllPersistenceTests.class,
-	AccessRightsTest.class,
-	CoordinateTest.class,
-	FlagReasonTest.class,
-	GenderTest.class,
-	GolfPhotoFactoryTest.class,
-	GolfPhotoTest.class,
-	GuestTest.class,
-	LocationTest.class,
-	PhotoFilterTest.class,
-	TagsTest.class,
-	UserStatusTest.class,
-	ValueTest.class,
-})
-
-public class AllModelTests {
-
+public class GolfPhotoManager extends PhotoManager {
+	
+ 	private static final Logger log = Logger.getLogger(GolfPhotoManager.class.getName());
+ 	
+	public GolfPhotoManager() {
+		super();
+	} 
+	
 }

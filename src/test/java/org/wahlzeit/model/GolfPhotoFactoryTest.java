@@ -17,30 +17,36 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
-
 package org.wahlzeit.model;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.wahlzeit.model.persistence.AllPersistenceTests;
+import static org.junit.Assert.assertEquals;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({ 
-	AllPersistenceTests.class,
-	AccessRightsTest.class,
-	CoordinateTest.class,
-	FlagReasonTest.class,
-	GenderTest.class,
-	GolfPhotoFactoryTest.class,
-	GolfPhotoTest.class,
-	GuestTest.class,
-	LocationTest.class,
-	PhotoFilterTest.class,
-	TagsTest.class,
-	UserStatusTest.class,
-	ValueTest.class,
-})
+import org.junit.Test;
 
-public class AllModelTests {
+public class GolfPhotoFactoryTest {
+	
+	/**
+	 *
+	 */
+	@Test
+	public void testSingleton() {
+		PhotoFactory golfFactory1 = GolfPhotoFactory.getInstance();
+		PhotoFactory golfFactory2 = GolfPhotoFactory.getInstance();
+		
+		assertEquals(golfFactory1, golfFactory2);
+	}
+
+	/**
+	 *
+	 */
+	@Test
+	public void testCreatedPhotoType() {
+		GolfPhotoFactory.instance = null;
+		PhotoFactory golfFactory = GolfPhotoFactory.getInstance();
+
+		Photo photo = golfFactory.createPhoto();
+		
+		assertEquals(GolfPhoto.class, photo.getClass());
+	}
 
 }
