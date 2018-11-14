@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 by Jonathan Hacker
+2 * Copyright (c) 2018-2019 by Jonathan Hacker
  *
  * This file is part of the Wahlzeit photo rating application.
  *
@@ -21,100 +21,17 @@
 package org.wahlzeit.model;
 
 /**
- * A coordinate represents a three dimensional location
+ * A coordinate represents a location in 3D space
  */
-public class Coordinate {
-	
+public interface Coordinate {
 	/**
 	 * the difference below which two doubles are considered equal.
 	 */
-	private static final double EPSILON = 1e-7;
-	
-	/**
-	 * x, y, z representing the coordinate in the respective dimension
-	 */
-	private final double x;
-	private final double y;
-	private final double z;
-	
-	/**
-	 * @methodtype constructor
-	 */
-	public Coordinate(double x, double y, double z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
+	public static final double EPSILON = 1e-7;
 
-	/**
-	 * @methodtype get
-	 */
-	public double getX() {
-		return x;
-	}
-
-	/**
-	 * @methodtype get
-	 */
-	public double getY() {
-		return y;
-	}
-
-
-	/**
-	 * @methodtype get
-	 */
-	public double getZ() {
-		return z;
-	}
-	
-	/**
-	 * @methodtype get
-	 */
-	public double getDistance(Coordinate other) {
-		if (other == null) {
-			throw new IllegalArgumentException("the other coordinate must not be null");
-		}
-		
-		double dx = this.x - other.x;
-		double dy = this.y - other.y;
-		double dz = this.z - other.z;
-		
-	    return Math.sqrt(dx * dx + dy * dy + dz * dz); 
-	}
-
-	/**
-	 *
-	 */
-	public boolean isEqual(Coordinate other) {
-		if (this == other)
-			return true;
-		if (other == null)
-			return false;
-		if (Math.abs(other.x - x) > EPSILON)
-			return false;
-		if (Math.abs(other.y - y) > EPSILON)
-			return false;
-		if (Math.abs(other.z - z) > EPSILON)
-			return false;
-		return true;
-	}
-
-	/**
-	 *
-	 */
-	@Override
-    public boolean equals (Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-        if (obj instanceof Coordinate){
-            return isEqual((Coordinate) obj);
-        }
-        return false;
-    }
-
+	public CartesianCoordinate asCartesianCoordinate();
+	public double getCartesianDistance(Coordinate other);
+	public SphericCoordinate asSphericCoordinate();
+	public double getCentralAngle(Coordinate other);
+	public boolean isEqual(Coordinate other);
 }

@@ -28,6 +28,7 @@ import org.wahlzeit.model.persistence.AllPersistenceTests;
 @Suite.SuiteClasses({ 
 	AllPersistenceTests.class,
 	AccessRightsTest.class,
+	CartesianCoordinateTest.class,
 	CoordinateTest.class,
 	FlagReasonTest.class,
 	GenderTest.class,
@@ -36,6 +37,7 @@ import org.wahlzeit.model.persistence.AllPersistenceTests;
 	GuestTest.class,
 	LocationTest.class,
 	PhotoFilterTest.class,
+	SphericCoordinateTest.class,
 	TagsTest.class,
 	UserStatusTest.class,
 	ValueTest.class,

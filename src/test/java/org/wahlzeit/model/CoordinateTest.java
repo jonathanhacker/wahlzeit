@@ -32,51 +32,33 @@ import org.junit.Test;
  */
 public class CoordinateTest {
 
-	private static final double EPSILON = 1e-7;
-	
-	private Coordinate coordinate1;
-	private Coordinate coordinate2;
-	private Coordinate coordinate3;
-	private Coordinate coordinate4;
-	private Coordinate coordinate5;
+	private CartesianCoordinate cartesianOrigin;
+	private CartesianCoordinate cartesianCoordinate;
+	private SphericCoordinate sphericOrigin;
+	private SphericCoordinate sphericCoordinate;
 	
 	@Before
 	public void setUp() {
-		coordinate1 = new Coordinate(0.0, 0.0, 0.0);
-		coordinate2 = new Coordinate(2.0, 5.0, 10.0);
-		coordinate3 = new Coordinate(2.0, 5.0, 10.0);
-		coordinate4 = new Coordinate(2.00001, 5.0, 10.0);
-		coordinate5 = new Coordinate(-1.8, 2.4, -3.1);
+		cartesianOrigin = new CartesianCoordinate(0.0, 0.0, 0.0);
+		cartesianCoordinate = new CartesianCoordinate(2, 0, 0);
+		sphericOrigin = new SphericCoordinate(0.0, 0.0, 0.0);
+		sphericCoordinate = new SphericCoordinate(2, Math.PI/2, 0);
 	}
 	
 	@Test
-	public void testGetDistance() {
-		assertEquals(Math.sqrt(129.0), coordinate1.getDistance(coordinate2), EPSILON);
-		assertEquals(0.0, coordinate2.getDistance(coordinate2), EPSILON);
-		assertEquals(0.0, coordinate2.getDistance(coordinate3), EPSILON);
-		assertEquals(13.885604056, coordinate2.getDistance(coordinate5), EPSILON);
+	public void testConversion() {
+		assertEquals(sphericCoordinate.asCartesianCoordinate(), cartesianCoordinate);
+		assertEquals(cartesianCoordinate.asSphericCoordinate(), sphericCoordinate);
 	}
 	
- 	@Test(expected = IllegalArgumentException.class) 
-	public void testGetDistanceNull() {
-		coordinate1.getDistance(null);
+	@Test
+	public void testGetCartesianDistance() {
+		assertEquals(cartesianOrigin.getCartesianDistance(sphericCoordinate), sphericOrigin.getCartesianDistance(cartesianCoordinate), Coordinate.EPSILON);
+		assertEquals(sphericOrigin.getCartesianDistance(cartesianCoordinate), cartesianOrigin.getCartesianDistance(sphericCoordinate), Coordinate.EPSILON);
 	}
 	
- 	@Test
-	public void testIsEqual() {
-		assertTrue(coordinate1.isEqual(coordinate1));
-		assertTrue(coordinate2.isEqual(coordinate3));
-		assertFalse(coordinate1.isEqual(null));
-		assertFalse(coordinate1.isEqual(coordinate5));
-		assertFalse(coordinate3.isEqual(coordinate4));
-	}
- 	
- 	@Test
-	public void testEquals() {
-		assertTrue(coordinate1.equals(coordinate1));
-		assertTrue(coordinate2.equals(coordinate3));
-		assertFalse(coordinate1.equals(null));
-		assertFalse(coordinate1.equals(coordinate5));
-		assertFalse(coordinate3.equals(coordinate4));
+	@Test
+	public void testGetCentralAngle() {
+		assertEquals(cartesianCoordinate.getCentralAngle(sphericCoordinate), sphericCoordinate.getCentralAngle(cartesianCoordinate), Coordinate.EPSILON);
 	}
 }
