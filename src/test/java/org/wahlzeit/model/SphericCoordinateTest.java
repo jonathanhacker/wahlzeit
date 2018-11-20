@@ -45,11 +45,15 @@ public class SphericCoordinateTest {
 		coordinate4 = new SphericCoordinate(1.8001, Math.PI * (1 + 0.25),Math.PI *  0.125);
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void testInvalidRadius() {
+		new SphericCoordinate(-1.0, 0, 0);
+	}
+	
 	@Test
 	public void testAsCartesianCoordinate() {
 		assertEquals(new CartesianCoordinate(0, 0, 0), coordinate1.asCartesianCoordinate());
 		assertEquals(new CartesianCoordinate(1.175906668, 0.48707649, 1.272792206), coordinate2.asCartesianCoordinate());
-		assertEquals(coordinate2, coordinate3.asCartesianCoordinate());
 		assertEquals(new CartesianCoordinate(-1.175971997, -0.487103550, -1.272862917), coordinate4.asCartesianCoordinate());
 	}
 	

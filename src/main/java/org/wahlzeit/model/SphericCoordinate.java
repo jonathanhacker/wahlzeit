@@ -1,5 +1,5 @@
 /*
-2 * Copyright (c) 2018-2019 by Jonathan Hacker
+ * Copyright (c) 2018-2019 by Jonathan Hacker
  *
  * This file is part of the Wahlzeit photo rating application.
  *
@@ -23,22 +23,36 @@ package org.wahlzeit.model;
 /**
  * A coordinate represents a three dimensional location with cartesian coordinates
  */
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate {
 	
 	/**
-	 * x, y, z representing the coordinate in the respective dimension
+	 * The distance from the origin. Has to be non-negative 
 	 */
 	private final double radius;
+	/**
+	 * The angle of elevation from the equator.
+	 */
 	private final double theta;
+	/**
+	 * The angle from the zero meridian.
+	 */
 	private final double phi;
 	
 	/**
 	 * @methodtype constructor
 	 */
 	public SphericCoordinate(double radius, double theta, double phi) {
+		if (!assertValidRadius(radius)) {
+			throw new IllegalArgumentException("radius has to be non-negative");
+		}
+		
 		this.radius = radius;
 		this.theta = theta;
 		this.phi = phi;
+	}
+	
+	public boolean assertValidRadius(double radius) {
+		return radius + EPSILON >= 0;
 	}
 
 	/**
@@ -76,20 +90,6 @@ public class SphericCoordinate implements Coordinate {
 	}
 	
 	/**
-	 * @methodtype get
-	 */
-	@Override
-	public double getCartesianDistance(Coordinate other) {
-		if (other == null) {
-			throw new IllegalArgumentException("the other coordinate must not be null");
-		}
-		
-		CartesianCoordinate cartesianOther = other.asCartesianCoordinate();
-		
-		return cartesianOther.getCartesianDistance(this);
-	}
-	
-	/**
 	 * @methodtype conversion
 	 */
 	@Override
@@ -97,51 +97,4 @@ public class SphericCoordinate implements Coordinate {
 		return this;
 	}
 	
-	/**
-	 * @methodtype get
-	 */
-	@Override
-	public double getCentralAngle(Coordinate other) {
-		if (other == null) {
-			throw new IllegalArgumentException("the other coordinate must not be null");
-		}
-		
-		SphericCoordinate sphericOther = other.asSphericCoordinate();
-		
-		double dphi = Math.abs(sphericOther.phi - this.phi);
-		
-		// formula from https://en.wikipedia.org/wiki/Great-circle_distance
-		double a = Math.sin(this.phi) * Math.sin(sphericOther.phi);
-		double b = Math.cos(this.phi) * Math.cos(sphericOther.phi) * Math.cos(sphericOther.theta - theta);
-		double dsigma = Math.acos(a + b);
-		return dsigma;
-	}
-
-	/**
-	 * @methodtype boolean-query
-	 */
-	@Override
-	public boolean isEqual(Coordinate other) {
-		if (this == other)
-			return true;
-		if (other == null)
-			return false;
-		return other.asCartesianCoordinate().isEqual(this);
-	}
-
-	/**
-	 * @methodtype boolean-query
-	 */
-	@Override
-    public boolean equals (Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-        if (obj instanceof Coordinate){
-            return isEqual((Coordinate) obj);
-        }
-        return false;
-    }
-
 }
