@@ -42,7 +42,7 @@ public class SphericCoordinateTest {
 		coordinate1 = new SphericCoordinate(0.0, 0.0, 0.0);
 		coordinate2 = new SphericCoordinate(1.8, Math.PI * 0.25, Math.PI * 0.125);
 		coordinate3 = new SphericCoordinate(1.8, Math.PI * 0.25, Math.PI * 0.125);
-		coordinate4 = new SphericCoordinate(1.8001, Math.PI * (1 + 0.25),Math.PI *  0.125);
+		coordinate4 = new SphericCoordinate(1.8001, Math.PI * (-0.75),Math.PI *  0.125);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -70,7 +70,6 @@ public class SphericCoordinateTest {
 		assertEquals(0.858885759, coordinate1.getCentralAngle(coordinate2), Coordinate.EPSILON);
 		assertEquals(0.0, coordinate2.getCentralAngle(coordinate2), Coordinate.EPSILON);
 		assertEquals(0.0, coordinate2.getCentralAngle(coordinate3), Coordinate.EPSILON);
-		//assertEquals(Math.PI, coordinate3.getCentralAngle(coordinate4), Coordinate.EPSILON);
 	}
 	
 	@Test

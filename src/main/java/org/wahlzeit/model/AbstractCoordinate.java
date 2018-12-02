@@ -34,9 +34,15 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getCartesianDistance(Coordinate other) {
+		/*
+		 * Precondition: The other object must not be null
+		 */
 		if (other == null) {
 			throw new IllegalArgumentException("the other coordinate must not be null");
 		}
+		/*
+		 * By converting this and the other coordinate object, their class invariants are ensured.
+		 */
 		
 		CartesianCoordinate cartesianThis = this.asCartesianCoordinate();
 		CartesianCoordinate cartesianOther = other.asCartesianCoordinate();
@@ -45,7 +51,14 @@ public abstract class AbstractCoordinate implements Coordinate {
 		double dy = cartesianThis.getY() - cartesianOther.getY();
 		double dz = cartesianThis.getZ() - cartesianOther.getZ();
 		
-	    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+		double result = Math.sqrt(dx * dx + dy * dy + dz * dz);
+		/*
+		 * Postcondition: The result is a valid nonnegative double value
+		 */
+		assert Double.isFinite(result);
+		assert result + EPSILON >= 0;
+		
+		return result;
 	}
 	
 	/**
@@ -53,10 +66,16 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public double getCentralAngle(Coordinate other) {
+		/*
+		 * Precondition: The other object must not be null
+		 */
 		if (other == null) {
 			throw new IllegalArgumentException("the other coordinate must not be null");
 		}
 		
+		/*
+		 * By converting this and the other coordinate object, their class invariants are ensured.
+		 */
 		SphericCoordinate sphericThis = this.asSphericCoordinate();
 		SphericCoordinate sphericOther = other.asSphericCoordinate();
 		
@@ -66,6 +85,12 @@ public abstract class AbstractCoordinate implements Coordinate {
 		double a = Math.sin(sphericThis.getPhi()) * Math.sin(sphericOther.getPhi());
 		double b = Math.cos(sphericThis.getPhi()) * Math.cos(sphericOther.getPhi()) * Math.cos(sphericOther.getTheta() - sphericThis.getTheta());
 		double dsigma = Math.acos(a + b);
+		
+		/*
+		 * Postcondition: The result is a valid double value between zero and π
+		 */
+		assert Double.isFinite(dsigma);
+		assert dsigma + EPSILON >= 0 && dsigma - EPSILON <= Math.PI;
 		return dsigma;
 	}
 	
@@ -74,6 +99,12 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
     public boolean equals (Object obj) {
+		/*
+		 * Precondition: None. If the other object does not meet specific criteria, it is not equal to this one.
+		 */
+		/*
+		 * Postcondition: The return value has to be either true or false. Ensured by the language.
+		 */
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -89,6 +120,12 @@ public abstract class AbstractCoordinate implements Coordinate {
 	 */
 	@Override
 	public boolean isEqual(Coordinate other) {
+		/*
+		 * Precondition: None. If the other object does not meet specific criteria, it is not equal to this one.
+		 */
+		/*
+		 * Postcondition: The return value has to be either true or false. Ensured by the language.
+		 */
 		if (this == other)
 			return true;
 		if (other == null)
@@ -104,4 +141,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 			return false;
 		return true;
 	}
+	
+	/*
+	 * @methodtype assert
+	 */
+	public abstract void assertClassInvariants();
 }

@@ -30,11 +30,11 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	private final double radius;
 	/**
-	 * The angle of elevation from the equator.
+	 * The angle of elevation from the equator. Has to lie between -π and +π.
 	 */
 	private final double theta;
 	/**
-	 * The angle from the zero meridian.
+	 * The angle from the zero meridian. Has to lie between 0 and 2π.
 	 */
 	private final double phi;
 	
@@ -42,17 +42,21 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 * @methodtype constructor
 	 */
 	public SphericCoordinate(double radius, double theta, double phi) {
-		if (!assertValidRadius(radius)) {
-			throw new IllegalArgumentException("radius has to be non-negative");
-		}
+		
+		/*
+		 * Precondition: the given arguments have to suffice our range requirements
+		 */
+		if (!isRadiusValid(radius) || !isThetaValid(theta) || !isPhiValid(phi))
+			throw new IllegalArgumentException();
 		
 		this.radius = radius;
 		this.theta = theta;
 		this.phi = phi;
-	}
-	
-	public boolean assertValidRadius(double radius) {
-		return radius + EPSILON >= 0;
+		
+		/*
+		 * Postcondition: the new object satisfies our invariants
+		 */
+		assertClassInvariants();
 	}
 
 	/**
@@ -82,11 +86,23 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
+		/*
+		 * Precondition: the current object has to be valid before conversion
+		 */
+		assertClassInvariants();
+		
 		double x = radius * Math.sin(theta) * Math.cos(phi);
 		double y = radius * Math.sin(theta) * Math.sin(phi);
 		double z = radius * Math.cos(theta);
 		
-		return new CartesianCoordinate(x, y, z);
+		CartesianCoordinate result = new CartesianCoordinate(x, y, z);
+		
+		/*
+		 * Postcondition: the converted object has to satisfy its invariants 
+		 */
+		result.assertClassInvariants();
+		
+		return result;
 	}
 	
 	/**
@@ -94,7 +110,62 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
+		/*
+		 * Postcondition: this object satisfies our invariants
+		 */
+		
+		assertClassInvariants();
+		
 		return this;
 	}
 	
+	/*
+	 * @methodtype assert
+	 */
+	@Override
+    public void assertClassInvariants (){
+		/*
+		 * for a spheric coordinate to be valid, all its attributes have to be valid.
+		 */
+		assert isRadiusValid(this.radius);
+		assert isThetaValid(this.theta);
+		assert isPhiValid(this.phi);
+    }
+	
+	/*
+	 * @methodtype boolean-query
+	 */
+	 private static boolean isRadiusValid(double radius) {
+		boolean finite = Double.isFinite(radius);
+		/*
+        * the radius has to be nonnegative
+        */
+        boolean domain = radius + EPSILON >= 0;
+        return finite && domain;
+	}
+	
+	/*
+	 * @methodtype boolean-query
+	 */
+	 private static boolean isThetaValid(double theta) {
+		boolean finite = Double.isFinite(theta);
+		/*
+		 * θ has to lie between -π and π
+		 */
+		boolean domain = theta + EPSILON >= -Math.PI && theta - EPSILON < Math.PI;
+		return finite && domain;
+	}
+	 
+	/*
+	 * @methodtype boolean-query
+	 */
+	private static boolean isPhiValid(double phi) {
+		boolean finite = Double.isFinite(phi);
+		/*
+		 * φ has to lie between zero and 2π
+		 */
+		boolean domain = phi + EPSILON >= 0 && phi - EPSILON < 2 * Math.PI;
+		return finite && domain;
+	}
+
 }

@@ -36,9 +36,20 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 * @methodtype constructor
 	 */
 	public CartesianCoordinate(double x, double y, double z) {
+		/*
+		 * Precondition: all given coordinates have to be finite 
+		 */
+		if (!Double.isFinite(x) || !Double.isFinite(y) || !Double.isFinite(z))
+			throw new IllegalArgumentException();
+		
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		
+		/*
+		 * Postcondition: the new object satisfies our invariants
+		 */
+		assertClassInvariants();
 	}
 
 	/**
@@ -68,6 +79,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
+		/*
+		 * Postcondition: this object satisfies our invariants
+		 */
+		assertClassInvariants();
+		
 		return this;
 	}
 
@@ -76,6 +92,11 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
+		/*
+		 * Precondition: the object satisfies the invariants before conversion
+		 */
+		assertClassInvariants();
+		
 		double radius = Math.sqrt(x * x + y * y + z * z);
 		double theta = Double.NaN;
 		if (radius < EPSILON) {
@@ -90,7 +111,26 @@ public class CartesianCoordinate extends AbstractCoordinate {
 			phi = Math.atan2(y,  x);
 		}
 		
-		return new SphericCoordinate(radius, theta, phi);
+		SphericCoordinate result = new SphericCoordinate(radius, theta, phi);
+		
+		/*
+		 * Postcondition: the converted object satisfies our invariants
+		 */
+		result.assertClassInvariants();
+		return result;
+	}
+	
+	/*
+	 * @methodtype assert
+	 */
+	public void assertClassInvariants() {
+		/*
+		 * The requirements that have to be met for a Cartesian Coordinate to be valid.
+		 * The coordinates have to be valid real numbers, their domain is not determined.
+		 */
+		Double.isFinite(x);
+		Double.isFinite(y);
+		Double.isFinite(z);
 	}
 
 }
