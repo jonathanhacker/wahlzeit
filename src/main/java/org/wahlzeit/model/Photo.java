@@ -157,6 +157,9 @@ public class Photo extends DataObject {
 	 * @methodtype get
 	 */
 	public Image getImage(PhotoSize photoSize) {
+		if (photoSize == null) {
+			throw new IllegalArgumentException("photoSize must not be null");
+		}
 		return images.get(photoSize);
 	}
 
@@ -164,6 +167,9 @@ public class Photo extends DataObject {
 	 * @methodtype set
 	 */
 	public void setImage(PhotoSize photoSize, Image image) {
+		if (photoSize == null) {
+			throw new IllegalArgumentException("photoSize must not be null");
+		}
 		this.images.put(photoSize, image);
 	}
 
@@ -200,6 +206,9 @@ public class Photo extends DataObject {
 	 * @methodtype get
 	 */
 	public String getSummary(ModelConfig cfg) {
+		if (cfg == null) {
+			throw new IllegalArgumentException("cfg must not be null");
+		}
 		return cfg.asPhotoSummary(ownerId);
 	}
 
@@ -207,6 +216,9 @@ public class Photo extends DataObject {
 	 * @methodtype get
 	 */
 	public String getCaption(ModelConfig cfg) {
+		if (cfg == null) {
+			throw new IllegalArgumentException("cfg must not be null");
+		}
 		String ownerName = UserManager.getInstance().getUserById(ownerId).getNickName();
 		return cfg.asPhotoCaption(ownerName);
 	}
@@ -245,6 +257,9 @@ public class Photo extends DataObject {
 	 * @methodtype boolean-query
 	 */
 	public boolean hasSameOwner(Photo photo) {
+		if (photo == null) {
+			throw new IllegalArgumentException("photo must not be null");
+		}
 		return photo.getOwnerEmailAddress().equals(ownerEmailAddress);
 	}
 
@@ -316,6 +331,9 @@ public class Photo extends DataObject {
 	 * @methodtype boolean-query
 	 */
 	public boolean hasPhotoSize(PhotoSize size) {
+		if (size == null) {
+			throw new IllegalArgumentException("size must not be null");
+		}
 		return maxPhotoSize.asInt() >= size.asInt();
 	}
 
@@ -330,6 +348,9 @@ public class Photo extends DataObject {
 	 * @methodtype get
 	 */
 	public String getPraiseAsString(ModelConfig cfg) {
+		if (cfg == null) {
+			throw new IllegalArgumentException("cfg must not be null");
+		}
 		return cfg.asPraiseString(getPraise());
 	}
 
@@ -375,6 +396,9 @@ public class Photo extends DataObject {
 	 * @methodtype boolean-query
 	 */
 	public boolean hasTag(String tag) {
+		if (tag == null) {
+			throw new IllegalArgumentException("tag must not be null");
+		}
 		return tags.hasTag(tag);
 	}
 

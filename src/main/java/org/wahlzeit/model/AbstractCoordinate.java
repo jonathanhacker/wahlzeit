@@ -1,5 +1,5 @@
 /*
-2 * Copyright (c) 2018-2019 by Jonathan Hacker
+ * Copyright (c) 2018-2019 by Jonathan Hacker
  *
  * This file is part of the Wahlzeit photo rating application.
  *

@@ -130,6 +130,9 @@ public class PhotoManager extends ObjectManager {
 	 * @methodproperties primitive
 	 */
 	protected void doAddPhoto(Photo myPhoto) {
+		if (myPhoto == null) {
+			throw new IllegalArgumentException("myPhoto must not be null");
+		}
 		photoCache.put(myPhoto.getId(), myPhoto);
 	}
 
@@ -191,6 +194,9 @@ public class PhotoManager extends ObjectManager {
 	 * Loads all scaled Images of this Photo from Google Cloud Storage
 	 */
 	protected void loadScaledImages(Photo photo) {
+		if (photo == null) {
+			throw new IllegalArgumentException("photo must not be null");
+		}
 		String photoIdAsString = photo.getId().asString();
 		ImageStorage imageStorage = ImageStorage.getInstance();
 
@@ -222,11 +228,17 @@ public class PhotoManager extends ObjectManager {
 	 *
 	 */
 	public void savePhoto(Photo photo) {
+		if (photo == null) {
+			throw new IllegalArgumentException("photo must not be null");
+		}
 		updateObject(photo);
 	}
 
 	@Override
 	protected void updateDependents(Persistent obj) {
+		if (obj == null) {
+			throw new IllegalArgumentException("obj must not be null");
+		}
 		if (obj instanceof Photo) {
 			Photo photo = (Photo) obj;
 			saveScaledImages(photo);
@@ -252,6 +264,10 @@ public class PhotoManager extends ObjectManager {
 	 * the Datastore, it is simply not persisted.
 	 */
 	protected void saveScaledImages(Photo photo) {
+		if (photo == null) {
+			throw new IllegalArgumentException("photo must not be null");
+		}
+		
 		String photoIdAsString = photo.getId().asString();
 		ImageStorage imageStorage = ImageStorage.getInstance();
 		PhotoSize photoSize;
@@ -284,6 +300,9 @@ public class PhotoManager extends ObjectManager {
 	 * the photo to the datastore.
 	 */
 	protected void updateTags(Photo photo) {
+		if (photo == null) {
+			throw new IllegalArgumentException("photo must not be null");
+		}
 		// delete all existing tags, for the case that some have been removed
 		deleteObjects(Tag.class, Tag.PHOTO_ID, photo.getId().asString());
 
@@ -315,6 +334,9 @@ public class PhotoManager extends ObjectManager {
 	 *
 	 */
 	public Set<Photo> findPhotosByOwner(String ownerName) {
+		if (ownerName == null) {
+			throw new IllegalArgumentException("ownerName must not be null");
+		}
 		Set<Photo> result = new HashSet<Photo>();
 		readObjects(result, Photo.class, Photo.OWNER_ID, ownerName);
 
@@ -329,6 +351,9 @@ public class PhotoManager extends ObjectManager {
 	 *
 	 */
 	public Photo getVisiblePhoto(PhotoFilter filter) {
+		if (filter == null) {
+			throw new IllegalArgumentException("filter must not be null");
+		}
 		filter.generateDisplayablePhotoIds();
 		return getPhotoFromId(filter.getRandomDisplayablePhotoId());
 	}
@@ -347,6 +372,9 @@ public class PhotoManager extends ObjectManager {
 	 * @methodtype command
 	 */
 	public void addPhoto(Photo photo) throws IOException {
+		if (photo == null) {
+			throw new IllegalArgumentException("photo must not be null");
+		}
 		PhotoId id = photo.getId();
 		assertIsNewPhoto(id);
 		doAddPhoto(photo);
