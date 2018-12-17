@@ -117,7 +117,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 			phi = Math.atan2(y,  x);
 		}
 		
-		SphericCoordinate result = new SphericCoordinate(radius, theta, phi);
+		SphericCoordinate result = SphericCoordinate.getSphericCoordinate(radius, theta, phi);
 		
 		/*
 		 * Postcondition: the converted object satisfies our invariants
@@ -126,34 +126,22 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		return result;
 	}
 	
+	/**
+	 * @methodtype get
+	 */
 	public boolean isEqual(Coordinate other) {
-		if (other == null)
+		if (!(other instanceof CartesianCoordinate)) {
 			return false;
-		
-		if (other instanceof CartesianCoordinate) {
-			CartesianCoordinate cartesianOther = (CartesianCoordinate) other;
-			if (Math.abs(cartesianOther.getX() - x) > EPSILON)
-				return false;
-			if (Math.abs(cartesianOther.getY() - y) > EPSILON)
-				return false;
-			if (Math.abs(cartesianOther.getZ() - z) > EPSILON)
-				return false;
-			return true;
-		} else if (other instanceof SphericCoordinate) {
-			SphericCoordinate sphericOther = (SphericCoordinate) other;
-			double ox = sphericOther.getRadius() * Math.sin(sphericOther.getTheta()) * Math.cos(sphericOther.getPhi());
-			double oy = sphericOther.getRadius() * Math.sin(sphericOther.getTheta()) * Math.sin(sphericOther.getPhi());
-			double oz = sphericOther.getRadius() * Math.cos(sphericOther.getTheta());
-			
-			if (Math.abs(ox - x) > EPSILON)
-				return false;
-			if (Math.abs(oy - y) > EPSILON)
-				return false;
-			if (Math.abs(oz - z) > EPSILON)
-				return false;
-			return true;
 		}
-		return false;
+		CartesianCoordinate cartesianOther = (CartesianCoordinate) other;
+
+		if (Math.abs(cartesianOther.getX() - this.getX()) > EPSILON)
+			return false;
+		if (Math.abs(cartesianOther.getY() - this.getY()) > EPSILON)
+			return false;
+		if (Math.abs(cartesianOther.getZ() - this.getZ()) > EPSILON)
+			return false;
+		return true;
 	}
 	
 	/*

@@ -117,6 +117,11 @@ public abstract class AbstractCoordinate implements Coordinate {
         return false;
     }
 	
+	/**
+	 * @methodtype boolean-query
+	 */
+	public abstract boolean isEqual(Coordinate other);
+	
 	/*
 	 * @methodtype assert
 	 */

@@ -57,7 +57,7 @@ public class CartesianCoordinateTest {
 	public void testAsSphericalCoordinate() {
 		assertEquals(SphericCoordinate.getSphericCoordinate(0, 0, 0), coordinate1.asSphericCoordinate());
 		assertEquals(SphericCoordinate.getSphericCoordinate(4.313930922, 2.372586465, 2.214297436), coordinate2.asSphericCoordinate());
-		assertEquals(coordinate2, coordinate3.asSphericCoordinate());
+		assertEquals(coordinate2.asSphericCoordinate(), coordinate3.asSphericCoordinate());
 		assertEquals(SphericCoordinate.getSphericCoordinate(11.357818452, 0.493984248, 1.190288225), coordinate4.asSphericCoordinate());
 	}
 	

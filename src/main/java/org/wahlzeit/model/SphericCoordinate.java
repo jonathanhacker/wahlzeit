@@ -100,7 +100,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 		double y = radius * Math.sin(theta) * Math.sin(phi);
 		double z = radius * Math.cos(theta);
 		
-		CartesianCoordinate result = new CartesianCoordinate(x, y, z);
+		CartesianCoordinate result = CartesianCoordinate.getCartesianCoordinate(x, y, z);
 		
 		/*
 		 * Postcondition: the converted object has to satisfy its invariants 
@@ -127,45 +127,19 @@ public class SphericCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype get
 	 */
-	@Override
 	public boolean isEqual(Coordinate other) {
-		if (other == null)
+		if (!(other instanceof SphericCoordinate)) {
 			return false;
-		
-		if (other instanceof CartesianCoordinate) {
-			CartesianCoordinate cartesianOther = (CartesianCoordinate) other;
-			
-			double x = radius * Math.sin(theta) * Math.cos(phi);
-			double y = radius * Math.sin(theta) * Math.sin(phi);
-			double z = radius * Math.cos(theta);
-	
-			if (Math.abs(cartesianOther.getX() - x) > EPSILON)
-				return false;
-			if (Math.abs(cartesianOther.getY() - y) > EPSILON)
-				return false;
-			if (Math.abs(cartesianOther.getZ() - z) > EPSILON)
-				return false;
-			return true;
-		} else if (other instanceof SphericCoordinate) {
-			SphericCoordinate sphericOther = (SphericCoordinate) other;
-			
-			double x = radius * Math.sin(theta) * Math.cos(phi);
-			double y = radius * Math.sin(theta) * Math.sin(phi);
-			double z = radius * Math.cos(theta);
-			
-			double ox = sphericOther.radius * Math.sin(sphericOther.theta) * Math.cos(sphericOther.phi);
-			double oy = sphericOther.radius * Math.sin(sphericOther.theta) * Math.sin(sphericOther.phi);
-			double oz = sphericOther.radius * Math.cos(sphericOther.theta);
-			
-			if (Math.abs(ox - x) > EPSILON)
-				return false;
-			if (Math.abs(oy - y) > EPSILON)
-				return false;
-			if (Math.abs(oz - z) > EPSILON)
-				return false;
-			return true;
 		}
-		return false;
+		SphericCoordinate sphericOther = (SphericCoordinate) other;
+
+		if (Math.abs(sphericOther.getRadius() - this.getRadius()) > EPSILON)
+			return false;
+		if (Math.abs(sphericOther.getTheta() - this.getTheta()) > EPSILON)
+			return false;
+		if (Math.abs(sphericOther.getPhi() - this.getPhi()) > EPSILON)
+			return false;
+		return true;
 	}
 	
 	/*
