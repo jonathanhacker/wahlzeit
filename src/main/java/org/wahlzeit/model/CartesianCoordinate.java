@@ -35,7 +35,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
 	/**
 	 * @methodtype constructor
 	 */
-	public CartesianCoordinate(double x, double y, double z) {
+	CartesianCoordinate(double x, double y, double z) {
 		/*
 		 * Precondition: all given coordinates have to be finite 
 		 */
@@ -50,6 +50,12 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		 * Postcondition: the new object satisfies our invariants
 		 */
 		assertClassInvariants();
+	}
+	
+	public static CartesianCoordinate getCartesianCoordinate(double x, double y, double z) {
+		CartesianCoordinate newObject = new CartesianCoordinate(x, y, z);
+		Coordinate valueObject = coordinateManager.getValueObject(newObject);
+		return valueObject.asCartesianCoordinate();
 	}
 
 	/**
@@ -118,6 +124,36 @@ public class CartesianCoordinate extends AbstractCoordinate {
 		 */
 		result.assertClassInvariants();
 		return result;
+	}
+	
+	public boolean isEqual(Coordinate other) {
+		if (other == null)
+			return false;
+		
+		if (other instanceof CartesianCoordinate) {
+			CartesianCoordinate cartesianOther = (CartesianCoordinate) other;
+			if (Math.abs(cartesianOther.getX() - x) > EPSILON)
+				return false;
+			if (Math.abs(cartesianOther.getY() - y) > EPSILON)
+				return false;
+			if (Math.abs(cartesianOther.getZ() - z) > EPSILON)
+				return false;
+			return true;
+		} else if (other instanceof SphericCoordinate) {
+			SphericCoordinate sphericOther = (SphericCoordinate) other;
+			double ox = sphericOther.getRadius() * Math.sin(sphericOther.getTheta()) * Math.cos(sphericOther.getPhi());
+			double oy = sphericOther.getRadius() * Math.sin(sphericOther.getTheta()) * Math.sin(sphericOther.getPhi());
+			double oz = sphericOther.getRadius() * Math.cos(sphericOther.getTheta());
+			
+			if (Math.abs(ox - x) > EPSILON)
+				return false;
+			if (Math.abs(oy - y) > EPSILON)
+				return false;
+			if (Math.abs(oz - z) > EPSILON)
+				return false;
+			return true;
+		}
+		return false;
 	}
 	
 	/*

@@ -39,22 +39,22 @@ public class SphericCoordinateTest {
 	
 	@Before
 	public void setUp() {
-		coordinate1 = new SphericCoordinate(0.0, 0.0, 0.0);
-		coordinate2 = new SphericCoordinate(1.8, Math.PI * 0.25, Math.PI * 0.125);
-		coordinate3 = new SphericCoordinate(1.8, Math.PI * 0.25, Math.PI * 0.125);
-		coordinate4 = new SphericCoordinate(1.8001, Math.PI * (-0.75),Math.PI *  0.125);
+		coordinate1 = SphericCoordinate.getSphericCoordinate(0.0, 0.0, 0.0);
+		coordinate2 = SphericCoordinate.getSphericCoordinate(1.8, Math.PI * 0.25, Math.PI * 0.125);
+		coordinate3 = SphericCoordinate.getSphericCoordinate(1.8, Math.PI * 0.25, Math.PI * 0.125);
+		coordinate4 = SphericCoordinate.getSphericCoordinate(1.8001, Math.PI * (-0.75),Math.PI *  0.125);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidRadius() {
-		new SphericCoordinate(-1.0, 0, 0);
+		SphericCoordinate.getSphericCoordinate(-1.0, 0, 0);
 	}
 	
 	@Test
 	public void testAsCartesianCoordinate() {
-		assertEquals(new CartesianCoordinate(0, 0, 0), coordinate1.asCartesianCoordinate());
-		assertEquals(new CartesianCoordinate(1.175906668, 0.48707649, 1.272792206), coordinate2.asCartesianCoordinate());
-		assertEquals(new CartesianCoordinate(-1.175971997, -0.487103550, -1.272862917), coordinate4.asCartesianCoordinate());
+		assertEquals(CartesianCoordinate.getCartesianCoordinate(0, 0, 0), coordinate1.asCartesianCoordinate());
+		assertEquals(CartesianCoordinate.getCartesianCoordinate(1.175906668, 0.48707649, 1.272792206), coordinate2.asCartesianCoordinate());
+		assertEquals(CartesianCoordinate.getCartesianCoordinate(-1.175971997, -0.487103550, -1.272862917), coordinate4.asCartesianCoordinate());
 	}
 	
 	@Test

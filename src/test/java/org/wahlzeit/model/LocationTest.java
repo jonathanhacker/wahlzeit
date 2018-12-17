@@ -32,10 +32,10 @@ public class LocationTest {
 
 	@Test
 	public void testLocationInitialization() {
-		Coordinate coordinate = new CartesianCoordinate(1.23, 4.32, 78.76);
+		Coordinate coordinate = CartesianCoordinate.getCartesianCoordinate(1.23, 4.32, 78.76);
 		Location location = new Location(coordinate);
-		assertEquals(location.getCoordinate(), new CartesianCoordinate(1.23, 4.32, 78.76));
+		assertEquals(location.getCoordinate(), CartesianCoordinate.getCartesianCoordinate(1.23, 4.32, 78.76));
 		assertEquals(location.getCoordinate(), coordinate);
-		assertNotEquals(location.getCoordinate(), new CartesianCoordinate(0, 0, 0));
+		assertNotEquals(location.getCoordinate(), CartesianCoordinate.getCartesianCoordinate(0, 0, 0));
 	}
 }

@@ -39,10 +39,10 @@ public class CoordinateTest {
 	
 	@Before
 	public void setUp() {
-		cartesianOrigin = new CartesianCoordinate(0.0, 0.0, 0.0);
-		cartesianCoordinate = new CartesianCoordinate(2, 0, 0);
-		sphericOrigin = new SphericCoordinate(0.0, 0.0, 0.0);
-		sphericCoordinate = new SphericCoordinate(2, Math.PI/2, 0);
+		cartesianOrigin = CartesianCoordinate.getCartesianCoordinate(0.0, 0.0, 0.0);
+		cartesianCoordinate = CartesianCoordinate.getCartesianCoordinate(2, 0, 0);
+		sphericOrigin = SphericCoordinate.getSphericCoordinate(0.0, 0.0, 0.0);
+		sphericCoordinate = SphericCoordinate.getSphericCoordinate(2, Math.PI/2, 0);
 	}
 	
 	@Test

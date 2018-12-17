@@ -20,30 +20,35 @@
 
 package org.wahlzeit.model;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.wahlzeit.model.persistence.AllPersistenceTests;
+import java.util.concurrent.ConcurrentHashMap;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({ 
-	AllPersistenceTests.class,
-	AccessRightsTest.class,
-	CartesianCoordinateTest.class,
-	CoordinateTest.class,
-	FlagReasonTest.class,
-	GenderTest.class,
-	GolfPhotoFactoryTest.class,
-	GolfPhotoTest.class,
-	GuestTest.class,
-	LocationTest.class,
-	PhotoFilterTest.class,
-	SphericCoordinateTest.class,
-	TagsTest.class,
-	UserStatusTest.class,
-	ValueObjectManagerTest.class,
-	ValueTest.class,
-})
+/* A class that manages shared value objects */
+public class ValueObjectManager<T> {
+	/* There is no ConcurrentHashSet, so we use a Map and ignore the value */
+	private ConcurrentHashMap<T, T> valueObjects;
+	
+	public ValueObjectManager() {
+		valueObjects = new ConcurrentHashMap<>();
+	}
 
-public class AllModelTests {
+	/*
+	 * @param obj the object for which a unique value object should be returned
+	 * @return the value object corresponding to the given object
+	 * @methodtype get
+	 */
+	public T getValueObject(T obj) {
+		if (obj == null) {
+			throw new IllegalArgumentException("can't manage value object for null");
+		}
+		
+		for (T valueObject : valueObjects.keySet()) {
+			if (valueObject.equals(obj)) {
+				return valueObject;
+			}
+		}
+		
+		valueObjects.put(obj, obj);
+        return obj;
 
+    }
 }

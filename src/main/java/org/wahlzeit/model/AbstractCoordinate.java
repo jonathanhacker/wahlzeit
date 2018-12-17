@@ -24,6 +24,8 @@ package org.wahlzeit.model;
  * An abstract coordinate class implementing the coordinate interface
  */
 public abstract class AbstractCoordinate implements Coordinate {
+	protected static ValueObjectManager<Coordinate> coordinateManager = new ValueObjectManager<Coordinate>();
+	
 	@Override
 	public abstract CartesianCoordinate asCartesianCoordinate();
 	@Override
@@ -114,33 +116,6 @@ public abstract class AbstractCoordinate implements Coordinate {
         }
         return false;
     }
-	
-	/**
-	 * @methodtype boolean-query
-	 */
-	@Override
-	public boolean isEqual(Coordinate other) {
-		/*
-		 * Precondition: None. If the other object does not meet specific criteria, it is not equal to this one.
-		 */
-		/*
-		 * Postcondition: The return value has to be either true or false. Ensured by the language.
-		 */
-		if (this == other)
-			return true;
-		if (other == null)
-			return false;
-		CartesianCoordinate cartesianThis = this.asCartesianCoordinate();
-		CartesianCoordinate cartesianOther = other.asCartesianCoordinate();
-		
-		if (Math.abs(cartesianOther.getX() - cartesianThis.getX()) > EPSILON)
-			return false;
-		if (Math.abs(cartesianOther.getY() - cartesianThis.getY()) > EPSILON)
-			return false;
-		if (Math.abs(cartesianOther.getZ() - cartesianThis.getZ()) > EPSILON)
-			return false;
-		return true;
-	}
 	
 	/*
 	 * @methodtype assert

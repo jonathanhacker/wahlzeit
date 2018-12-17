@@ -39,10 +39,10 @@ public class CartesianCoordinateTest {
 	
 	@Before
 	public void setUp() {
-		coordinate1 = new CartesianCoordinate(0.0, 0.0, 0.0);
-		coordinate2 = new CartesianCoordinate(-1.8, 2.4, -3.1);
-		coordinate3 = new CartesianCoordinate(-1.8, 2.4, -3.1);
-		coordinate4 = new CartesianCoordinate(2.00001, 5.0, 10.0);
+		coordinate1 = CartesianCoordinate.getCartesianCoordinate(0.0, 0.0, 0.0);
+		coordinate2 = CartesianCoordinate.getCartesianCoordinate(-1.8, 2.4, -3.1);
+		coordinate3 = CartesianCoordinate.getCartesianCoordinate(-1.8, 2.4, -3.1);
+		coordinate4 = CartesianCoordinate.getCartesianCoordinate(2.00001, 5.0, 10.0);
 	}
 	
 	@Test
@@ -55,10 +55,10 @@ public class CartesianCoordinateTest {
 	
 	@Test
 	public void testAsSphericalCoordinate() {
-		assertEquals(new SphericCoordinate(0, 0, 0), coordinate1.asSphericCoordinate());
-		assertEquals(new SphericCoordinate(4.313930922, 2.372586465, 2.214297436), coordinate2.asSphericCoordinate());
+		assertEquals(SphericCoordinate.getSphericCoordinate(0, 0, 0), coordinate1.asSphericCoordinate());
+		assertEquals(SphericCoordinate.getSphericCoordinate(4.313930922, 2.372586465, 2.214297436), coordinate2.asSphericCoordinate());
 		assertEquals(coordinate2, coordinate3.asSphericCoordinate());
-		assertEquals(new SphericCoordinate(11.357818452, 0.493984248, 1.190288225), coordinate4.asSphericCoordinate());
+		assertEquals(SphericCoordinate.getSphericCoordinate(11.357818452, 0.493984248, 1.190288225), coordinate4.asSphericCoordinate());
 	}
 	
 	@Test
@@ -74,8 +74,8 @@ public class CartesianCoordinateTest {
 		assertEquals(0.0, coordinate2.getCentralAngle(coordinate2), Coordinate.EPSILON);
 		assertEquals(0.0, coordinate2.getCentralAngle(coordinate3), Coordinate.EPSILON);
 		assertEquals(0.62614456, coordinate3.getCentralAngle(coordinate4), Coordinate.EPSILON);
-		assertEquals(Math.PI/2, new CartesianCoordinate(1, 0, 0).getCentralAngle(new CartesianCoordinate(0, 1, 0)), Coordinate.EPSILON);
-		assertEquals(Math.PI/2, new CartesianCoordinate(2, 0, 0).getCentralAngle(new CartesianCoordinate(0, 0, 2)), Coordinate.EPSILON);
+		assertEquals(Math.PI/2, CartesianCoordinate.getCartesianCoordinate(1, 0, 0).getCentralAngle(CartesianCoordinate.getCartesianCoordinate(0, 1, 0)), Coordinate.EPSILON);
+		assertEquals(Math.PI/2, CartesianCoordinate.getCartesianCoordinate(2, 0, 0).getCentralAngle(CartesianCoordinate.getCartesianCoordinate(0, 0, 2)), Coordinate.EPSILON);
 	}
 	
  	@Test(expected = IllegalArgumentException.class) 

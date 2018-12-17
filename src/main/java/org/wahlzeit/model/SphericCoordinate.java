@@ -38,11 +38,10 @@ public class SphericCoordinate extends AbstractCoordinate {
 	 */
 	private final double phi;
 	
-	/**
+	/*
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate(double radius, double theta, double phi) {
-		
+	SphericCoordinate(double radius, double theta, double phi) {
 		/*
 		 * Precondition: the given arguments have to suffice our range requirements
 		 */
@@ -57,6 +56,12 @@ public class SphericCoordinate extends AbstractCoordinate {
 		 * Postcondition: the new object satisfies our invariants
 		 */
 		assertClassInvariants();
+	}
+	
+	public static SphericCoordinate getSphericCoordinate(double radius, double theta, double phi) {
+		SphericCoordinate newObject = new SphericCoordinate(radius, theta, phi);
+		Coordinate valueObject = coordinateManager.getValueObject(newObject);
+		return valueObject.asSphericCoordinate();
 	}
 
 	/**
@@ -119,6 +124,50 @@ public class SphericCoordinate extends AbstractCoordinate {
 		return this;
 	}
 	
+	/**
+	 * @methodtype get
+	 */
+	@Override
+	public boolean isEqual(Coordinate other) {
+		if (other == null)
+			return false;
+		
+		if (other instanceof CartesianCoordinate) {
+			CartesianCoordinate cartesianOther = (CartesianCoordinate) other;
+			
+			double x = radius * Math.sin(theta) * Math.cos(phi);
+			double y = radius * Math.sin(theta) * Math.sin(phi);
+			double z = radius * Math.cos(theta);
+	
+			if (Math.abs(cartesianOther.getX() - x) > EPSILON)
+				return false;
+			if (Math.abs(cartesianOther.getY() - y) > EPSILON)
+				return false;
+			if (Math.abs(cartesianOther.getZ() - z) > EPSILON)
+				return false;
+			return true;
+		} else if (other instanceof SphericCoordinate) {
+			SphericCoordinate sphericOther = (SphericCoordinate) other;
+			
+			double x = radius * Math.sin(theta) * Math.cos(phi);
+			double y = radius * Math.sin(theta) * Math.sin(phi);
+			double z = radius * Math.cos(theta);
+			
+			double ox = sphericOther.radius * Math.sin(sphericOther.theta) * Math.cos(sphericOther.phi);
+			double oy = sphericOther.radius * Math.sin(sphericOther.theta) * Math.sin(sphericOther.phi);
+			double oz = sphericOther.radius * Math.cos(sphericOther.theta);
+			
+			if (Math.abs(ox - x) > EPSILON)
+				return false;
+			if (Math.abs(oy - y) > EPSILON)
+				return false;
+			if (Math.abs(oz - z) > EPSILON)
+				return false;
+			return true;
+		}
+		return false;
+	}
+	
 	/*
 	 * @methodtype assert
 	 */
@@ -167,5 +216,5 @@ public class SphericCoordinate extends AbstractCoordinate {
 		boolean domain = phi + EPSILON >= 0 && phi - EPSILON < 2 * Math.PI;
 		return finite && domain;
 	}
-
+	
 }
