@@ -20,9 +20,15 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.annotations.PatternInstance;
+
 /**
  * An abstract coordinate class implementing the coordinate interface
  */
+@PatternInstance(
+		patternName = "Template Method",
+		participants = {"AbstractCoordinate", "CartesianCoordinate", "SphericCoordinate"}
+)
 public abstract class AbstractCoordinate implements Coordinate {
 	protected static ValueObjectManager<Coordinate> coordinateManager = new ValueObjectManager<Coordinate>();
 	

@@ -22,11 +22,16 @@ package org.wahlzeit.model;
 
 import java.util.logging.Logger;
 
+import org.wahlzeit.annotations.PatternInstance;
 import org.wahlzeit.services.LogBuilder;
 
 /**
  * Specialization of PhotoFactory to create instances of GolfPhoto class
  */
+@PatternInstance(
+		patternName = "Factory Method",
+		participants = {"PhotoFactory", "GolfPhotoFactory"}
+)
 public class GolfPhotoFactory extends PhotoFactory {
 	
 	private static final Logger log = Logger.getLogger(PhotoFactory.class.getName());

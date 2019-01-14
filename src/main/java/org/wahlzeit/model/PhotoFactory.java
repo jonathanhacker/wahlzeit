@@ -20,9 +20,9 @@
 
 package org.wahlzeit.model;
 
-import org.wahlzeit.services.LogBuilder;
-
 import java.util.logging.Logger;
+
+import org.wahlzeit.services.LogBuilder;
 
 /**
  * An Abstract Factory for creating photos and related objects.
