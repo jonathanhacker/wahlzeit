@@ -92,15 +92,15 @@ public class GolfPhotoFactory extends PhotoFactory {
 	/**
 	 * Creates a new golf photo with the specified par score
 	 */
-	public GolfPhoto createPhoto(int parScore) {
-		return new GolfPhoto(parScore);
+	public GolfPhoto createPhoto(Golf golf) {
+		return new GolfPhoto(golf);
 	}
 	
 	/**
 	 * Creates a new golf photo with the specified id and par score
 	 */
-	public GolfPhoto createPhoto(PhotoId id, int parScore) {
-		return new GolfPhoto(id, parScore);
+	public GolfPhoto createPhoto(PhotoId id, Golf golf) {
+		return new GolfPhoto(id, golf);
 	}
 
 	/**

@@ -20,60 +20,20 @@
 
 package org.wahlzeit.model;
 
-import com.googlecode.objectify.annotation.Ignore;
-import com.googlecode.objectify.annotation.Subclass;
+import org.junit.Test;
 
 /**
- * A GolfPhoto represents a user-provided (uploaded) golf photo.
+ * All test cases of the class {@link Coordinate}.
  */
-@Subclass
-public class GolfPhoto extends Photo {
-	
-	@Ignore
-	private Golf golf; 
-	
-	/**
-	 * @methodtype constructor
-	 */
-	public GolfPhoto() {
-		super();
-	}
+public class GolfTest {
 
-	/**
-	 * @methodtype constructor
-	 */
-	public GolfPhoto(PhotoId myId) {
-		super(myId);
+	@Test(expected = IllegalArgumentException.class)
+	public void invalidType() {
+		new Golf(null, 4);
 	}
 	
-	/**
-	 * @methodtype constructor
-	 */
-	public GolfPhoto(PhotoId myId, Golf golf) {
-		super(myId);
-		this.golf = golf;
+	@Test(expected = IllegalArgumentException.class)
+	public void invalidParScore() {
+		new Golf(new GolfType("forest"), -5);
 	}
-	
-	/**
-	 * @methodtype constructor
-	 */
-	public GolfPhoto(Golf golf) {
-		super();
-		this.golf = golf;
-	}
-	
-	/**
-	 * @methodtype getter
-	 */
-	public Golf getGolf() {
-		return golf;
-	}
-	
-	/**
-	 * @methodtype setter
-	 */
-	public void setGolf(Golf golf) {
-		this.golf = golf;
-	}
-
 }

@@ -31,11 +31,14 @@ public class GolfPhotoTest {
 	 */
 	@Test
 	public void testGolfPhoto() {
-		GolfPhoto golfPhoto1 = new GolfPhoto(4);
-		GolfPhoto golfPhoto2 = new GolfPhoto(new PhotoId(0), 4);
+		GolfManager golfManager = GolfManager.getInstance();
+		Golf golf1 = golfManager.createGolf("forest", 4);
+		Golf golf2 = golfManager.createGolf("meadow", 4);
+		GolfPhoto golfPhoto1 = new GolfPhoto(golf1);
+		GolfPhoto golfPhoto2 = new GolfPhoto(new PhotoId(0), golf2);
 		
 		assertNotEquals(golfPhoto1, golfPhoto2);
-		assertEquals(golfPhoto1.getParScore(), golfPhoto2.getParScore());
+		assertEquals(golfPhoto1.getGolf().getParScore(), golfPhoto2.getGolf().getParScore());
 	}
 
 }

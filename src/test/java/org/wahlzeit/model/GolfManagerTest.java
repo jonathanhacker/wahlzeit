@@ -20,60 +20,35 @@
 
 package org.wahlzeit.model;
 
-import com.googlecode.objectify.annotation.Ignore;
-import com.googlecode.objectify.annotation.Subclass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
+import org.junit.Test;
 
 /**
- * A GolfPhoto represents a user-provided (uploaded) golf photo.
+ * All test cases of the class {@link GolfManager}.
  */
-@Subclass
-public class GolfPhoto extends Photo {
+public class GolfManagerTest {
 	
-	@Ignore
-	private Golf golf; 
-	
-	/**
-	 * @methodtype constructor
-	 */
-	public GolfPhoto() {
-		super();
-	}
+	GolfManager golfManager = GolfManager.getInstance();
 
-	/**
-	 * @methodtype constructor
-	 */
-	public GolfPhoto(PhotoId myId) {
-		super(myId);
-	}
-	
-	/**
-	 * @methodtype constructor
-	 */
-	public GolfPhoto(PhotoId myId, Golf golf) {
-		super(myId);
-		this.golf = golf;
-	}
-	
-	/**
-	 * @methodtype constructor
-	 */
-	public GolfPhoto(Golf golf) {
-		super();
-		this.golf = golf;
-	}
-	
-	/**
-	 * @methodtype getter
-	 */
-	public Golf getGolf() {
-		return golf;
-	}
-	
-	/**
-	 * @methodtype setter
-	 */
-	public void setGolf(Golf golf) {
-		this.golf = golf;
-	}
+	@Test
+	public void sameTypeInMap() {
+		GolfType forest1 = golfManager.getGolfType("forest");
+		GolfType forest2 = golfManager.getGolfType("forest");
 
+		assertEquals(forest1,  forest2);
+	}
+	
+	@Test
+	public void golfsWithSameProperties() {
+		Golf golf1 = golfManager.createGolf("forest", 4);
+		Golf golf2 = golfManager.createGolf("forest", 4);
+		
+		assertEquals(golf1.getType(), golf2.getType());
+		assertEquals(golf1.getParScore(), golf2.getParScore());
+		assertNotSame(golf1, golf2);
+	}
+	
 }

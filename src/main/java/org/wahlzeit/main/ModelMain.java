@@ -20,25 +20,27 @@
 
 package org.wahlzeit.main;
 
-import com.google.appengine.api.images.Image;
-import com.google.appengine.api.images.ImagesServiceFactory;
-import org.wahlzeit.model.GlobalsManager;
-import org.wahlzeit.model.Photo;
-import org.wahlzeit.model.PhotoCaseManager;
-import org.wahlzeit.model.GolfPhotoFactory;
-import org.wahlzeit.model.GolfPhotoManager;
-import org.wahlzeit.model.User;
-import org.wahlzeit.model.UserManager;
-import org.wahlzeit.model.persistence.DatastoreAdapter;
-import org.wahlzeit.model.persistence.ImageStorage;
-import org.wahlzeit.services.LogBuilder;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
+
+import org.wahlzeit.model.GlobalsManager;
+import org.wahlzeit.model.GolfManager;
+import org.wahlzeit.model.GolfPhotoFactory;
+import org.wahlzeit.model.GolfPhotoManager;
+import org.wahlzeit.model.Photo;
+import org.wahlzeit.model.PhotoCaseManager;
+import org.wahlzeit.model.User;
+import org.wahlzeit.model.UserManager;
+import org.wahlzeit.model.persistence.DatastoreAdapter;
+import org.wahlzeit.model.persistence.ImageStorage;
+import org.wahlzeit.services.LogBuilder;
+
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesServiceFactory;
 
 /**
  * A single-threaded Main class with database connection. Can be used by tools that don't want to start a server.
