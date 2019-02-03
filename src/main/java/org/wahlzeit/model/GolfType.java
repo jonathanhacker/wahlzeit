@@ -1,5 +1,10 @@
 package org.wahlzeit.model;
 
+/*
+ * A type categorizing the Golf objects.
+ * 
+ * Takes part in the base-type-collaboration as type with Golf.
+ */
 public class GolfType {
 	private GolfManager manager = GolfManager.getInstance();
 
@@ -54,5 +59,9 @@ public class GolfType {
 			return false;
 		return true;
 	}
+	
+    public boolean isSubtype (Object obj){
+        return false;   // there is no hierarchical structure of golf types -> always false
+    }
 
 }

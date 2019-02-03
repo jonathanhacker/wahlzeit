@@ -8,6 +8,11 @@ import java.util.logging.Logger;
 
 import org.wahlzeit.services.ObjectManager;
 
+/*
+ * A manager handling the creation of Golf objects.
+ * 
+ * Takes part in the manager-element-collaboration as manager with Golf. 
+ */
 public class GolfManager extends ObjectManager {
  	private static final Logger log = Logger.getLogger(GolfManager.class.getName());
 

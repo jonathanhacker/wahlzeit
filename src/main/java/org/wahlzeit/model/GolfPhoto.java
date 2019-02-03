@@ -25,6 +25,8 @@ import com.googlecode.objectify.annotation.Subclass;
 
 /**
  * A GolfPhoto represents a user-provided (uploaded) golf photo.
+ * 
+ * Takes part in the client-service-collaboration as client with Golf.
  */
 @Subclass
 public class GolfPhoto extends Photo {

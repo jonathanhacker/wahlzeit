@@ -1,5 +1,12 @@
 package org.wahlzeit.model;
 
+/*
+ * The domain class describing a real world golf object.
+ * 
+ * Takes part in the client-service-collaboration as service with GolfPhoto.
+ * Takes part in the base-type-collaboration as base with GolfType.
+ * Takes part in the manager-element-collaboration as element with GolfManager.
+ */
 public class Golf {
 	private GolfManager manager = GolfManager.getInstance();
 	private GolfType type;
